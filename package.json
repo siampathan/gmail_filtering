@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "email-verifier": "^0.4.1",
+    "request": "^2.88.2"
+  }
+}
