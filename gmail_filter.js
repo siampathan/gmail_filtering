@@ -109,3 +109,33 @@ const key = process.env.API_KEY;
 // }
 
 // findLinkedInProfileURLData(gmailAddress);
+
+//add simple object for test purpose
+const info = {
+  email: "siampathan005@gmail.com",
+  emailType: "personal",
+  person: {
+    publicIdentifier: "mahadi-hassan-siam-pathan-0235a124a",
+    linkedInIdentifier: "ACoAAD2qzNsBhtTxL597GT0RdnrKUaw5qhuxbyI",
+    firstName: "Mahadi Hassan",
+    lastName: "Siam Pathan",
+    headline: "Student at Institute of Science and Technology (IST)",
+    location: "Dhaka Bangladesh",
+    followerCount: 26,
+    connectionCount: 26,
+    skills: [
+      "Git",
+      "SASS",
+      "Firebase",
+      "Front-End Development",
+      "React.js",
+      "JavaScript",
+      "Cascading Style Sheets (CSS)",
+    ],
+    linkedInUrl: "https://linkedin.com/in/mahadi-hassan-siam-pathan-0235a124a",
+  },
+};
+
+let find = info.person.linkedInUrl;
+
+console.log(`linkedInUrl: ${find}`);
