@@ -1,8 +1,8 @@
 //Active email finder
-const Verifier = require("email-verifier");
-require("dotenv").config();
+// const Verifier = require("email-verifier");
+// require("dotenv").config();
 
-const key = process.env.API_KEY;
+// const key = process.env.API_KEY;
 //deactive email -> kapiladah@gmail.com
 //concorsomusic2@yahoo.it
 //hemapt1@yahoo.com
@@ -12,25 +12,25 @@ const key = process.env.API_KEY;
 //tiwi1@mac.com
 //justkelly@comcast.net
 
-let verifier = new Verifier(key);
-verifier.verify("justkelly@comcast.net", (err, data) => {
-  if (err) throw err;
+// let verifier = new Verifier(key);
+// verifier.verify("justkelly@comcast.net", (err, data) => {
+//   if (err) throw err;
 
-  if (
-    data.formatCheck == "true" &&
-    data.smtpCheck == "true" &&
-    data.dnsCheck == "true" &&
-    data.disposableCheck == "false"
-  ) {
-    //console.log(data);
+//   if (
+//     data.formatCheck == "true" &&
+//     data.smtpCheck == "true" &&
+//     data.dnsCheck == "true" &&
+//     data.disposableCheck == "false"
+//   ) {
+//console.log(data);
 
-    console.log(data.emailAddress, "Active");
-  } else {
-    console.log(data);
-    console.log(data.emailAddress, "This Email not Active");
-  }
-  //'at_dB7Bc8Ay80WXXQv421p5QqjSjwXuG'
-});
+//   console.log(data.emailAddress, "Active");
+// } else {
+//   console.log(data);
+//   console.log(data.emailAddress, "This Email not Active");
+// }
+//'at_dB7Bc8Ay80WXXQv421p5QqjSjwXuG'
+//});
 
 //multiple times gmail address
 //
@@ -75,7 +75,13 @@ verifier.verify("justkelly@comcast.net", (err, data) => {
 //   });
 // }
 
+// let start = performance.now();
+
 // emailTest(list_1);
+
+// let end = performance.now();
+// let time = end - start;
+// console.log("run time for this program", time);
 
 //find LinkedIn Profile gmail associated
 //
@@ -150,3 +156,22 @@ verifier.verify("justkelly@comcast.net", (err, data) => {
 // let find = info.person.linkedInUrl;
 
 // console.log(`linkedInUrl: ${find}`);
+
+//clearbit API use
+//
+//
+//
+//
+
+//gmail scrap from excel file
+const readXlsxFile = require("read-excel-file/node");
+
+let gmail_list = [];
+readXlsxFile("./email_list.xlsx").then((rows) => {
+  rows.forEach((ele, indx) => {
+    if (indx < 10) {
+      gmail_list.push(ele);
+    }
+  });
+  console.log(gmail_list);
+});
