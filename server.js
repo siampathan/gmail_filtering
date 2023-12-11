@@ -91,9 +91,7 @@ function emailUnVerifiers(email) {
 
 async function emailTester(emailList, type) {
   try {
-    const promises = emailList.map((email) =>
-      type == "verified" ? emailUnVerifiers(email) : emailVerifiers(email)
-    );
+    const promises = emailList.map((email) => emailUnVerifiers(email));
     const results = await Promise.all(promises);
     const filteredResults = results.filter((result) => result !== null);
     return filteredResults;
