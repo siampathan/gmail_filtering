@@ -120,6 +120,6 @@ app.post("/upload", upload.single("excelFile"), async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
