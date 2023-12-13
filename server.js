@@ -6,7 +6,7 @@ require("dotenv").config();
 
 //email-verifier
 const Verifier = require("email-verifier");
-const key = "at_dB7Bc8Ay80WXXQv421p5QqjSjwXuG";
+const key = process.env.API_Key;
 let verifier = new Verifier(key);
 
 const app = express();
