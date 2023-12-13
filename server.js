@@ -76,10 +76,10 @@ function emailUnVerifiers(email) {
         reject();
       }
       if (
-        data.formatCheck == "false" ||
-        data.smtpCheck == "false" ||
-        data.dnsCheck == "false" ||
-        data.disposableCheck == "true"
+        data?.formatCheck == "false" ||
+        data?.smtpCheck == "false" ||
+        data?.dnsCheck == "false" ||
+        data?.disposableCheck == "true"
       ) {
         resolve(data.emailAddress);
       } else {
