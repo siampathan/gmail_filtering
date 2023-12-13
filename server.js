@@ -6,7 +6,7 @@ require("dotenv").config();
 
 //email-verifier
 const Verifier = require("email-verifier");
-const key = process.env.API_KEY;
+const key = "at_dB7Bc8Ay80WXXQv421p5QqjSjwXuG";
 let verifier = new Verifier(key);
 
 const app = express();
@@ -56,10 +56,10 @@ function emailVerifiers(email) {
         reject();
       }
       if (
-        data.formatCheck == "true" &&
-        data.smtpCheck == "true" &&
-        data.dnsCheck == "true" &&
-        data.disposableCheck == "false"
+        data?.formatCheck == "true" &&
+        data?.smtpCheck == "true" &&
+        data?.dnsCheck == "true" &&
+        data?.disposableCheck == "false"
       ) {
         resolve(data.emailAddress);
       } else {
