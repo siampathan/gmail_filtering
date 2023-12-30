@@ -2,93 +2,40 @@ const express = require("express");
 const multer = require("multer");
 const xlsx = require("xlsx");
 const path = require("path");
+const app = express();
+const port = 8000;
 require("dotenv").config();
 
-//email-verifier
-const Verifier = require("email-verifier");
-const key = "at_dB7Bc8Ay80WXXQv421p5QqjSjwXuG";
-let verifier = new Verifier(key);
-
-const app = express();
-const port = 3000;
-
-// Set up Multer for file uploads
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// Serve static files from the "public" directory
 app.use(express.static("public"));
 
-// Handle GET request to display the HTML form
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, '"public", "index.html"'));
 });
 
-//gmil filter function
-//"at_dB7Bc8Ay80WXXQv421p5QqjSjwXuG"
-// function emailTest(gmailTest) {
-//   //const verifiedEmails = [];
-//   gmailTest.forEach((email) => {
-//     verifier.verify(email, (err, data) => {
-//       if (err) {
-//         console.error(`Error verifying ${email}: ${err}`);
-//         return;
-//       }
+const API_KEY = process.env.API_KEY;
 
-//       if (
-//         data.formatCheck == "true" &&
-//         data.smtpCheck == "true" &&
-//         data.dnsCheck == "true" &&
-//         data.disposableCheck == "false"
-//       )
-//         //return 1;
-//         console.log(data.emailAddress);
-//       else return 0;
-//     });
-//   });
-//   //return verifiedEmails;
-// }
-//for verify email checker
+const quickemailverification = require("quickemailverification")
+  .client(API_KEY)
+  .quickemailverification();
 
-// function emailVerifiers(email) {
-//   return new Promise((resolve, reject) => {
-//     verifier.verify(email, (err, data) => {
-//       console.log(data);
-//       if (err) {
-//         reject();
-//       }
-//       if (
-//         data?.formatCheck == "true" &&
-//         data?.smtpCheck == "true" &&
-//         data?.dnsCheck == "true" &&
-//         data?.disposableCheck == "false"
-//       ) {
-//         resolve(data.emailAddress);
-//       } else {
-//         resolve(null);
-//       }
-//     });
-//   });
-// }
-
-//for deactive email verifey
+// let email = "john.saragih@wanaarthalife.com";
+// quickemailverification.verify(email, (err, data) => {
+//   console.log(data);
+//data.body.result === 'valid'
+// });
+//0b301cb5b7d72721f51ab2e77e87b8a0928f55d97160eaf913a987c914a3
 
 function emailUnVerifiers(email) {
   return new Promise((resolve, reject) => {
-    verifier.verify(email, (err, data) => {
-      if (err) {
-        reject();
-      }
-      if (
-        data?.formatCheck == "false" ||
-        data?.smtpCheck == "false" ||
-        data?.dnsCheck == "false" ||
-        data?.disposableCheck == "true"
-      ) {
-        resolve(data.emailAddress);
-      } else {
-        resolve(null);
-      }
+    quickemailverification.verify(email, (err, data) => {
+      let response = data.body;
+      //console.log(response.body.result);
+      if (err) reject();
+      if (response.result === "invalid") resolve(response.email);
+      else resolve(null);
     });
   });
 }
@@ -105,9 +52,6 @@ async function emailTester(emailList) {
   }
 }
 
-// Handle POST request for file upload
-//let email_list = [];
-
 app.post("/upload", upload.single("excelFile"), async (req, res) => {
   const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
   const sheetName = workbook.SheetNames[0];
@@ -116,14 +60,11 @@ app.post("/upload", upload.single("excelFile"), async (req, res) => {
   });
   const newEmails = [].concat(...excelData);
   const verifiedEmails = await emailTester(newEmails);
-  // const verifiedEmails = emailTest(newEmails);
-  // const list = email_list.push(verifiedEmails);
 
-  //console.log(verifiedEmails);
+  console.log(verifiedEmails);
   res.json(verifiedEmails);
 });
 
-// Start the server
 app.listen(process.env.PORT || port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
